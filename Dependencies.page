@@ -1,0 +1,30 @@
+<apex:page lightningStyleSheets="true" controller="DependenciesController" tabStyle="Account">
+    <apex:form >
+        <apex:pageBlock title="Search component by Id or API Name:">
+            <apex:outputText value=" Component Id " />
+            <apex:inputText label="Component Id" value="{!componentid}" id="ComponentId"/>
+            <apex:outputText value=" Component Name " />
+            <apex:inputText value="{!ComponentName}" id="ComponentName"/>
+            <apex:commandButton action="{!save}" value="Search"/>
+            <apex:pageBlockSection title="Component Link:">
+                <apex:outputLink value="{!metadataComponentURL}" target="_blank" >{!metadataComponentURL}  </apex:outputLink>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock title="Dependent components:">
+            <apex:pageBlockTable value="{!recordsList1}" var="item">
+                <apex:column headerValue="Component Id" >
+                    <apex:outputLink value="{!item.RefMetadataComponentURL}" target="_blank">{!item.MetadataComponentId} </apex:outputLink>
+                </apex:column>
+                <apex:column headerValue="Component Name" value="{!item.MetadataComponentName}"/>
+                <apex:column headerValue="Component Type" value="{!item.RefMetadataComponentNameType}"/>
+                <apex:column headerValue="Dependency" value="{!item.RefMetadataComponentNameDependency}"/>                
+                <apex:column headerValue="Search dependency" >
+                    <apex:commandlink  styleClass="btn" action="{!searchItem}" value="Search"  >
+                        <apex:param assignTo="{!componentidRef}" name="Author" id="author" value="{!item.MetadataComponentId}"/>
+                    </apex:commandlink  >
+                </apex:column>
+            </apex:pageBlockTable>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
